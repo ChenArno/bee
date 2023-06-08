@@ -530,6 +530,7 @@ func NoticeUpdateBee() {
 	}
 	beeLogger.Log.Info("Getting bee latest version...")
 	versionLast := BeeLastVersion()
+	beeLogger.Log.Info("Getting bee latest version..."+versionLast)
 	versionNow := config.Version
 	if versionLast == "" {
 		beeLogger.Log.Warn("Get latest version err")

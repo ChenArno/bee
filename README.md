@@ -584,4 +584,5 @@ limitations under the License.
 ```
 
 ## 重新编译 bee
-go build -o bee.exe
+go build -o bee
+
