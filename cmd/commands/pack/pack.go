@@ -502,22 +502,23 @@ func packApp(cmd *commands.Command, args []string) int {
 		if goos == "windows" {
 			binPath += ".exe"
 		}
-// 原作者方法
-// 		args := []string{"build", "-o", binPath}
-// 		if len(buildArgs) > 0 {
-// 			args = append(args, strings.Fields(buildArgs)...)
-// 		}
+		// 原作者方法
+		// 		args := []string{"build", "-o", binPath}
+		// 		if len(buildArgs) > 0 {
+		// 			args = append(args, strings.Fields(buildArgs)...)
+		// 		}
 
-// 		if verbose {
-// 			fmt.Fprintf(output, "\t%s%s+ go %s%s%s\n", "\x1b[32m", "\x1b[1m", strings.Join(args, " "), "\x1b[21m", "\x1b[0m")
-// 		}
+		// 		if verbose {
+		// 			fmt.Fprintf(output, "\t%s%s+ go %s%s%s\n", "\x1b[32m", "\x1b[1m", strings.Join(args, " "), "\x1b[21m", "\x1b[0m")
+		// 		}
 
-// 		execmd := exec.Command("go", args...)
+		// 		execmd := exec.Command("go", args...)
 		// 新方法
 		var execmd *exec.Cmd
 		buildCmdStr := "go build -o " + binPath + " " + buildArgs
+		beeLogger.Log.Infof(buildCmdStr)
 		if runtime.GOOS == "windows" {
-			execmd   = exec.Command("cmd", "/C", buildCmdStr)
+			execmd = exec.Command("cmd", "/C", buildCmdStr)
 		} else {
 			execmd = exec.Command("/bin/bash", "-c", buildCmdStr)
 		}
@@ -525,7 +526,7 @@ func packApp(cmd *commands.Command, args []string) int {
 		if verbose {
 			fmt.Fprintf(output, "\t%s%s+ %s%s%s\n", "\x1b[32m", "\x1b[1m", buildCmdStr, "\x1b[21m", "\x1b[0m")
 		}
-		
+
 		execmd.Env = append(os.Environ(), envs...)
 		execmd.Stdout = os.Stdout
 		execmd.Stderr = os.Stderr
